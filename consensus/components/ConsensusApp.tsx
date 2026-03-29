@@ -212,7 +212,7 @@ export default function ConsensusApp() {
   }
 
   return (
-    <div className="max-w-[1100px] mx-auto px-6 py-8">
+    <div style={{ minHeight: '100vh', maxWidth: 960, margin: '0 auto', padding: '32px 40px' }}>
       {/* Policy banner */}
       <div className="mb-6 animate-fade-up">
         <p className="font-mono-label text-[9px] mb-1" style={{ color: 'rgba(255,255,255,0.25)' }}>
