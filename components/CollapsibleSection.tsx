@@ -41,7 +41,7 @@ export default function CollapsibleSection({ title, summary, defaultOpen = false
         </span>
         <span
           className="font-mono-label"
-          style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)' }}
+          style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.6)' }}
         >
           {title}
         </span>

@@ -37,7 +37,7 @@ export default function SpectrumBar({ positions, leftLabel, rightLabel, selected
   return (
     <div style={{ padding: '0 18px' }}>
       {/* Labels */}
-      <div className="flex justify-between mb-2">
+      <div className="flex justify-between" style={{ marginBottom: 20 }}>
         <span className="font-mono-label text-[9px]" style={{ color: 'var(--consensus-disagree)', opacity: 0.7 }}>
           {leftLabel}
         </span>
