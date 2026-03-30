@@ -35,43 +35,43 @@ Each agent is constrained to tag every factual claim with `[STAT:]`, `[SOURCE:]`
 
 ```
 ROUND 0: ASSUMPTION FRAMING
-    All 5 agents declare their assumptions (scope, timeline, economic
-    context, population, unstated). Programmatic conflict detection
-    identifies contradictions (e.g., "immediate" vs "phased" timelines).
+    All 5 agents declare their assumptions (scope, timeline, economic
+    context, population, unstated). Programmatic conflict detection
+    identifies contradictions (e.g., "immediate" vs "phased" timelines).
 
 ROUND 1: INDEPENDENT ANALYSIS
-    Each agent provides a position (SUPPORT/OPPOSE/CONDITIONAL), 3-4
-    evidence-tagged arguments, risks, and conditions for changing
-    their stance. Agents do not see each other's work.
+    Each agent provides a position (SUPPORT/OPPOSE/CONDITIONAL), 3-4
+    evidence-tagged arguments, risks, and conditions for changing
+    their stance. Agents do not see each other's work.
 
 ROUND 1.5: DISCREPANCY DETECTION
-    Two-stage conflict detection:
-    1. Programmatic pass — code detects numerical divergence (>10%),
-       source conflicts, and causal contradictions across agents
-    2. Moderator LLM pass — validates findings, identifies semantic
-       conflicts the code missed, flags assumption-driven vs. factual
-       disagreements
+    Two-stage conflict detection:
+    1. Programmatic pass — code detects numerical divergence (>10%),
+       source conflicts, and causal contradictions across agents
+    2. Moderator LLM pass — validates findings, identifies semantic
+       conflicts the code missed, flags assumption-driven vs. factual
+       disagreements
 
 ROUND 2: CONFLICT RESOLUTION
-    Each agent confronts the discrepancies, other agents' arguments,
-    and must concede at least one point. Produces revised positions,
-    agreements, rebuttals, and compromise proposals.
+    Each agent confronts the discrepancies, other agents' arguments,
+    and must concede at least one point. Produces revised positions,
+    agreements, rebuttals, and compromise proposals.
 
 ROUND 3: CONSENSUS SYNTHESIS
-    The Moderator synthesizes everything using an evidence hierarchy:
-    1. Verified claims (highest weight)
-    2. CBO/GAO/BLS official data
-    3. Peer-reviewed research
-    4. Federal Reserve analysis
-    5. Historical precedent
-    6. International comparisons
-    7. Think tank analysis
-    8. Theoretical models (lowest weight)
+    The Moderator synthesizes everything using an evidence hierarchy:
+    1. Verified claims (highest weight)
+    2. CBO/GAO/BLS official data
+    3. Peer-reviewed research
+    4. Federal Reserve analysis
+    5. Historical precedent
+    6. International comparisons
+    7. Think tank analysis
+    8. Theoretical models (lowest weight)
 
-    Output: consensus score, areas of agreement, compromises,
-    irreconcilable disagreements, rationality scores per agent,
-    and a single evidence-backed recommendation with specific
-    parameters (dollar amounts, timelines, conditions).
+    Output: consensus score, areas of agreement, compromises,
+    irreconcilable disagreements, rationality scores per agent,
+    and a single evidence-backed recommendation with specific
+    parameters (dollar amounts, timelines, conditions).
 ```
 
 ### Key Design Principles
@@ -100,50 +100,59 @@ ROUND 3: CONSENSUS SYNTHESIS
 
 ```
 consensus/
-  app/
-    api/deliberate/route.ts   — API endpoint: orchestrates the full deliberation
-    globals.css                — Theme, fonts, animations, CSS variables
-    layout.tsx                 — Root layout
-    page.tsx                   — Entry point → ConsensusApp
-  components/
-    ConsensusApp.tsx           — Main state machine, event stream consumer
-    PolicyInput.tsx            — Search bar UI with sample proposals
-    AgentStatusBar.tsx         — Real-time round/agent progress indicator
-    AgentBadge.tsx             — Colored agent label
-    PulsingDot.tsx             — Active agent animation
-    DeliberationTimeline.tsx   — Renders Round 0 → Round 2 results
-    AssumptionFramingPanel.tsx — Round 0 assumption cards + conflict display
-    AssumptionConflictCard.tsx — Individual assumption conflict
-    AgentAnalysisPanel.tsx     — Collapsible per-agent analysis with evidence tags
-    EvidenceVerificationBadge.tsx — Claim verification status indicator
-    VerificationPanel.tsx      — Verification results summary
-    DiscrepancyPanel.tsx       — Discrepancy report with severity levels
-    DiscrepancyResponseView.tsx— Agent defend/concede/partial responses
-    ResolvedDiscrepancyCard.tsx— Resolved conflict with winning position
-    ConsensusReport.tsx        — Final report: meter, recommendation, scores
-    ConsensusMeter.tsx         — Visual consensus score (0-100)
-    RationalRecommendation.tsx — Evidence-backed policy recommendation
-    RationalityScores.tsx      — Per-agent rationality rankings
-  lib/
-    agents.ts                  — Agent definitions, system prompts, colors
-    types.ts                   — TypeScript interfaces for all data structures
-    prompts.ts                 — Prompt builders for each deliberation round
-    claim-extractor.ts         — Extracts [STAT:]/[SOURCE:]/[CAUSAL:] claims
-    claim-comparator.ts        — Programmatic discrepancy detection
-    verification.ts            — Web search-based claim verification
-    sample-proposals.ts        — 5 pre-loaded policy proposals
+  app/
+    api/deliberate/route.ts   — API endpoint: orchestrates the full deliberation
+    globals.css                — Theme, fonts, animations, CSS variables
+    layout.tsx                 — Root layout
+    page.tsx                   — Entry point → ConsensusApp
+  components/
+    ConsensusApp.tsx           — Main state machine, event stream consumer
+    PolicyInput.tsx            — Search bar UI with sample proposals
+    AgentStatusBar.tsx         — Real-time round/agent progress indicator
+    AgentBadge.tsx             — Colored agent label
+    PulsingDot.tsx             — Active agent animation
+    DeliberationTimeline.tsx   — Renders Round 0 → Round 2 results
+    AssumptionFramingPanel.tsx — Round 0 assumption cards + conflict display
+    AssumptionConflictCard.tsx — Individual assumption conflict
+    AgentAnalysisPanel.tsx     — Collapsible per-agent analysis with evidence tags
+    EvidenceVerificationBadge.tsx — Claim verification status indicator
+    VerificationPanel.tsx      — Verification results summary
+    DiscrepancyPanel.tsx       — Discrepancy report with severity levels
+    DiscrepancyResponseView.tsx— Agent defend/concede/partial responses
+    ResolvedDiscrepancyCard.tsx— Resolved conflict with winning position
+    ConsensusReport.tsx        — Final report: meter, recommendation, scores
+    ConsensusMeter.tsx         — Visual consensus score (0-100)
+    RationalRecommendation.tsx — Evidence-backed policy recommendation
+    RationalityScores.tsx      — Per-agent rationality rankings
+  lib/
+    agents.ts                  — Agent definitions, system prompts, colors
+    types.ts                   — TypeScript interfaces for all data structures
+    prompts.ts                 — Prompt builders for each deliberation round
+    claim-extractor.ts         — Extracts [STAT:]/[SOURCE:]/[CAUSAL:] claims
+    claim-comparator.ts        — Programmatic discrepancy detection
+    verification.ts            — Web search-based claim verification
+    sample-proposals.ts        — 5 pre-loaded policy proposals
 ```
 
 ---
 
 ## API Optimization
 
-CONSENSUS is designed to run within the constraints of low-tier API keys (5 requests/minute):
+CONSENSUS uses **per-agent API keys** so that each of the six agents (5 analysts + 1 moderator) operates on its own rate-limit quota. This enables fully parallel execution within each round:
 
-- **Batched calls**: Rounds 0, 1, and 2 each produce all 5 agent perspectives in a single API call (15 calls → 5)
-- **Throttled dispatch**: 15-second minimum between API calls
-- **Exponential backoff**: 60s/75s/90s retry on rate limits
-- **Graceful degradation**: Verification skips if rate-limited without failing the deliberation
+- **Per-agent keys**: Each agent has its own Anthropic API key (`ANTHROPIC_API_KEY_FISCAL`, `ANTHROPIC_API_KEY_PROGRESSIVE`, etc.), so all 5 analysts run simultaneously without hitting a single key's rate limit
+- **Parallel rounds**: Rounds 0, 1, and 2 fire all 5 agent calls in parallel via `Promise.all` -- total wall-clock time equals the slowest agent, not the sum of all agents
+- **Exponential backoff**: 60s/75s/90s retry per key on rate limits
+- **~75s total deliberation**: Down from ~5 minutes with a single sequential key
+
+| Round | Calls | Parallelism |
+|-------|-------|-------------|
+| Round 0 (Assumptions) | 5 | All parallel |
+| Round 1 (Analysis) | 5 | All parallel |
+| Round 1.5 (Discrepancies) | 1 | Moderator key |
+| Round 2 (Conflict Resolution) | 5 | All parallel |
+| Round 3 (Consensus) | 1 | Moderator key |
+| **Total** | **17** | **Max 3 calls per key** |
 
 ---
 
@@ -151,18 +160,23 @@ CONSENSUS is designed to run within the constraints of low-tier API keys (5 requ
 
 1. Clone the repository
 2. Install dependencies:
-   ```bash
-   cd consensus
-   npm install
-   ```
-3. Create `.env.local` with your Anthropic API key:
-   ```
-   ANTHROPIC_API_KEY=sk-ant-...
-   ```
+   ```bash
+   cd consensus
+   npm install
+   ```
+3. Create `.env.local` with six Anthropic API keys (one per agent):
+   ```
+   ANTHROPIC_API_KEY_FISCAL=sk-ant-...
+   ANTHROPIC_API_KEY_PROGRESSIVE=sk-ant-...
+   ANTHROPIC_API_KEY_MACRO=sk-ant-...
+   ANTHROPIC_API_KEY_WELFARE=sk-ant-...
+   ANTHROPIC_API_KEY_LEGAL=sk-ant-...
+   ANTHROPIC_API_KEY_MODERATOR=sk-ant-...
+   ```
 4. Run the development server:
-   ```bash
-   npm run dev
-   ```
+   ```bash
+   npm run dev
+   ```
 5. Open [http://localhost:3000](http://localhost:3000)
 
 ---
