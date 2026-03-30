@@ -45,7 +45,7 @@ export default function AgentStatusBar({ activeAgent, activeRound, completedAgen
       </div>
 
       {/* Agent seats */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: 8, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
         {displayAgents.map(agent => {
           const roundCompleted = completedAgents[activeRound] || [];
           const isActive = activeAgent === agent.id;

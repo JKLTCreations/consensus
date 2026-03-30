@@ -90,7 +90,7 @@ export default function SpectrumView({ report, round1, round2 }: SpectrumViewPro
       )}
 
       {/* Toggle full report */}
-      <div className="text-center">
+      <div className="text-center" style={{ marginTop: 16, marginBottom: 8 }}>
         <button
           onClick={() => setShowFullReport(!showFullReport)}
           className="font-mono-label text-[10px] px-5 py-2 rounded transition-all"
