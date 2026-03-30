@@ -364,7 +364,7 @@ export default function ConsensusApp() {
         )}
 
         {/* Footer */}
-        <footer className="mb-6 text-center" style={{ paddingTop: 64 }}>
+        <footer className="mb-6 text-center" style={{ marginTop: 'auto', paddingTop: 64 }}>
           <div className="congress-divider" style={{ width: 100, margin: '0 auto 10px' }} />
           <p className="font-mono-label text-[8px]" style={{ color: 'rgba(255,255,255,0.12)' }}>
             CONSENSUS v1.0 — DECISION SUPPORT, NOT DECISION MAKING &nbsp;|&nbsp; POWERED BY CLAUDE

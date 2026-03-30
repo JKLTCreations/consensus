@@ -2,7 +2,6 @@
 
 import { ConsensusReport as ConsensusReportType } from '@/lib/types';
 import { getAgent } from '@/lib/agents';
-import ConsensusMeter from './ConsensusMeter';
 import CollapsibleSection from './CollapsibleSection';
 import ResolvedDiscrepancyCard from './ResolvedDiscrepancyCard';
 
@@ -21,21 +20,6 @@ export default function ConsensusReport({ report }: ConsensusReportProps) {
       <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', fontStyle: 'italic' }}>
         This analysis represents five analytical perspectives. It does not capture the lived experiences of all affected communities.
       </p>
-
-      {/* Top: Meter + Recommendation */}
-      <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 20 }}>
-        <div className="chamber-card" style={{ padding: '20px', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <ConsensusMeter score={report.consensus_score} />
-        </div>
-        <div className="chamber-card" style={{ padding: '20px 24px', borderRadius: 8, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <p className="font-mono-label" style={{ fontSize: 9, marginBottom: 8, color: 'rgba(255,255,255,0.4)' }}>
-            EVIDENCE-BASED RECOMMENDATION
-          </p>
-          <p style={{ fontSize: 13, lineHeight: 1.6, color: 'rgba(255,255,255,0.55)' }}>
-            {report.rational_recommendation}
-          </p>
-        </div>
-      </div>
 
       {/* Verification Impact */}
       <CollapsibleSection
