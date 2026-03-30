@@ -10,26 +10,25 @@ interface AssumptionConflictCardProps {
 export default function AssumptionConflictCard({ conflict }: AssumptionConflictCardProps) {
   return (
     <div
-      className="animate-slide-in"
       style={{
-        padding: '18px 22px',
+        padding: '14px 18px',
         borderRadius: 6,
-        background: 'rgba(247, 183, 49, 0.04)',
-        border: '1px solid rgba(247, 183, 49, 0.15)',
+        background: 'rgba(255,255,255,0.02)',
+        border: '1px solid rgba(255,255,255,0.06)',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-        <span className="font-mono-label" style={{ fontSize: 9, color: 'var(--consensus-compromise)' }}>
-          ⚡ CONFLICT
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+        <span className="font-mono-label" style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)' }}>
+          CONFLICT
         </span>
         <span className="font-mono-label" style={{ fontSize: 9, color: 'rgba(255,255,255,0.25)' }}>
           {conflict.dimension}
         </span>
       </div>
-      <p style={{ fontSize: 12, marginBottom: 14, color: 'rgba(255,255,255,0.55)' }}>
+      <p style={{ fontSize: 12, marginBottom: 12, color: 'rgba(255,255,255,0.45)' }}>
         {conflict.conflict_description}
       </p>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {conflict.agents_and_assumptions.map((aa, i) => {
           const agent = getAgent(aa.agent);
           return (
@@ -40,15 +39,15 @@ export default function AssumptionConflictCard({ conflict }: AssumptionConflictC
                   fontSize: 9,
                   flexShrink: 0,
                   marginTop: 2,
-                  padding: '3px 8px',
+                  padding: '2px 7px',
                   borderRadius: 4,
-                  color: agent?.color || 'var(--text-secondary)',
-                  background: `${agent?.color || '#fff'}10`,
+                  color: 'rgba(255,255,255,0.5)',
+                  background: 'rgba(255,255,255,0.04)',
                 }}
               >
                 {agent?.shortName || aa.agent}
               </span>
-              <span style={{ fontSize: 12, color: 'var(--text-primary)' }}>
+              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)' }}>
                 &ldquo;{aa.assumption}&rdquo;
               </span>
             </div>

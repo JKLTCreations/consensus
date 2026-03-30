@@ -221,8 +221,8 @@ export default function ConsensusApp() {
   };
 
   return (
-    <div className="congress-columns" style={{ minHeight: '100vh' }}>
-      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '40px 48px' }}>
+    <div className="congress-columns" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '40px 48px', width: '100%', flex: 1, display: 'flex', flexDirection: 'column' }}>
 
         {/* Chamber Header */}
         <div className="animate-fade-up" style={{
