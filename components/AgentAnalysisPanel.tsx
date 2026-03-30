@@ -68,7 +68,7 @@ export default function AgentAnalysisPanel({ agentId, round, analysis, round2, v
 
       {/* Expanded content */}
       {expanded && (
-        <div style={{ padding: '4px 20px 20px' }}>
+        <div style={{ padding: '16px 20px 20px' }}>
           {/* Position */}
           <div
             style={{
