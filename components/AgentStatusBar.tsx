@@ -19,9 +19,9 @@ export default function AgentStatusBar({ activeAgent, activeRound, completedAgen
   const progress = totalAgents > 0 ? (completedCount / totalAgents) * 100 : 0;
 
   return (
-    <div className="animate-fade-up chamber-card" style={{ padding: '14px 20px', borderRadius: 6 }}>
+    <div className="animate-fade-up chamber-card" style={{ padding: '18px 20px', borderRadius: 6 }}>
       {/* Top row: Round label + progress */}
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center justify-between" style={{ marginBottom: 16 }}>
         <div className="flex items-center gap-3">
           <span className="font-mono-label text-[9px]" style={{ color: 'rgba(255,255,255,0.25)' }}>
             COMMITTEE MEMBERS

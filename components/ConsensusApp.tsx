@@ -221,8 +221,8 @@ export default function ConsensusApp() {
   };
 
   return (
-    <div className="congress-columns" style={{ minHeight: '100vh' }}>
-      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '40px 48px' }}>
+    <div className="congress-columns" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '40px 48px', width: '100%', flex: 1, display: 'flex', flexDirection: 'column' }}>
 
         {/* Chamber Header */}
         <div className="animate-fade-up" style={{
@@ -255,7 +255,7 @@ export default function ConsensusApp() {
             <p className="font-mono-label text-[9px]" style={{ color: 'rgba(255,255,255,0.25)', marginBottom: 2 }}>
               {state.phase === 'deliberating' ? 'DELIBERATION IN SESSION' : 'DELIBERATION COMPLETE'}
             </p>
-            <p className="text-sm leading-relaxed line-clamp-2" style={{ color: 'var(--text-primary)' }}>
+            <p className="text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
               {state.proposal}
             </p>
           </div>
@@ -364,7 +364,7 @@ export default function ConsensusApp() {
         )}
 
         {/* Footer */}
-        <footer className="mb-6 text-center" style={{ paddingTop: 64 }}>
+        <footer className="mb-6 text-center" style={{ marginTop: 'auto', paddingTop: 64 }}>
           <div className="congress-divider" style={{ width: 100, margin: '0 auto 10px' }} />
           <p className="font-mono-label text-[8px]" style={{ color: 'rgba(255,255,255,0.12)' }}>
             CONSENSUS v1.0 — DECISION SUPPORT, NOT DECISION MAKING &nbsp;|&nbsp; POWERED BY CLAUDE
