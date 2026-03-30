@@ -19,10 +19,10 @@ export default function DeliberationTimeline({ state }: DeliberationTimelineProp
   const hasRound2 = Object.keys(state.round2).length > 0;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
       {/* Round 0 */}
       {hasRound0 && (
-        <section className="chamber-card" style={{ padding: '20px 24px', borderRadius: 6 }}>
+        <section className="chamber-card" style={{ padding: '28px 32px', borderRadius: 8 }}>
           <AssumptionFramingPanel
             assumptions={state.round0}
             conflicts={state.assumptionConflicts}
@@ -33,14 +33,14 @@ export default function DeliberationTimeline({ state }: DeliberationTimelineProp
       {/* Round 1 */}
       {hasRound1 && (
         <section>
-          <div className="flex items-center gap-3 mb-3">
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
             <div className="congress-divider" style={{ flex: 1 }} />
-            <h3 className="font-mono-label text-[10px] shrink-0" style={{ color: 'var(--text-muted)' }}>
+            <h3 className="font-mono-label" style={{ fontSize: 10, flexShrink: 0, color: 'var(--text-muted)' }}>
               ROUND 1 — INDEPENDENT ANALYSIS
             </h3>
             <div className="congress-divider" style={{ flex: 1 }} />
           </div>
-          <div className="flex flex-col gap-2">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {analysisAgents.map(agent => {
               const analysis = state.round1[agent.id];
               if (!analysis) return null;
@@ -61,14 +61,14 @@ export default function DeliberationTimeline({ state }: DeliberationTimelineProp
 
       {/* Verification */}
       {hasVerification && (
-        <section className="chamber-card" style={{ padding: '20px 24px', borderRadius: 6 }}>
+        <section className="chamber-card" style={{ padding: '28px 32px', borderRadius: 8 }}>
           <VerificationPanel report={state.verification!} />
         </section>
       )}
 
       {/* Discrepancies */}
       {hasDiscrepancies && (
-        <section className="chamber-card" style={{ padding: '20px 24px', borderRadius: 6 }}>
+        <section className="chamber-card" style={{ padding: '28px 32px', borderRadius: 8 }}>
           <DiscrepancyPanel report={state.discrepancies!} />
         </section>
       )}
@@ -76,14 +76,14 @@ export default function DeliberationTimeline({ state }: DeliberationTimelineProp
       {/* Round 2 */}
       {hasRound2 && (
         <section>
-          <div className="flex items-center gap-3 mb-3">
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
             <div className="congress-divider" style={{ flex: 1 }} />
-            <h3 className="font-mono-label text-[10px] shrink-0" style={{ color: 'var(--text-muted)' }}>
+            <h3 className="font-mono-label" style={{ fontSize: 10, flexShrink: 0, color: 'var(--text-muted)' }}>
               ROUND 2 — CONFLICT RESOLUTION
             </h3>
             <div className="congress-divider" style={{ flex: 1 }} />
           </div>
-          <div className="flex flex-col gap-2">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {analysisAgents.map(agent => {
               const analysis = state.round1[agent.id];
               const round2Data = state.round2[agent.id];

@@ -20,27 +20,29 @@ const CATEGORIES: { key: keyof Round0Assumptions; label: string }[] = [
 export default function AssumptionFramingPanel({ assumptions, conflicts }: AssumptionFramingPanelProps) {
   return (
     <div className="animate-fade-up">
-      <h3 className="font-mono-label text-[11px] mb-4" style={{ color: 'var(--text-muted)' }}>
+      <h3 className="font-mono-label" style={{ fontSize: 11, marginBottom: 20, color: 'var(--text-muted)' }}>
         ROUND 0 — ASSUMPTION FRAMING
       </h3>
 
       {/* Agent assumption cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16, marginBottom: 32 }}>
         {Object.entries(assumptions).map(([agentId, agentAssumptions]) => {
           const agent = getAgent(agentId);
           if (!agent) return null;
           return (
             <div
               key={agentId}
-              className="p-3 rounded-sm animate-slide-in"
+              className="animate-slide-in"
               style={{
+                padding: '16px 18px',
+                borderRadius: 6,
                 background: 'rgba(255,255,255,0.02)',
                 border: '1px solid rgba(255,255,255,0.04)',
               }}
             >
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs">{agent.icon}</span>
-                <span className="font-mono-label text-[10px]" style={{ color: agent.color }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                <span style={{ fontSize: 12 }}>{agent.icon}</span>
+                <span className="font-mono-label" style={{ fontSize: 10, color: agent.color }}>
                   {agent.shortName}
                 </span>
               </div>
@@ -48,12 +50,12 @@ export default function AssumptionFramingPanel({ assumptions, conflicts }: Assum
                 const items = agentAssumptions[key];
                 if (!items || items.length === 0) return null;
                 return (
-                  <div key={key} className="mb-2">
-                    <span className="font-mono-label text-[8px]" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                  <div key={key} style={{ marginBottom: 12 }}>
+                    <span className="font-mono-label" style={{ fontSize: 8, color: 'rgba(255,255,255,0.25)' }}>
                       {label}
                     </span>
                     {items.map((item, i) => (
-                      <p key={i} className="text-[11px] leading-snug" style={{ color: 'rgba(255,255,255,0.55)' }}>
+                      <p key={i} style={{ fontSize: 11, lineHeight: 1.5, color: 'rgba(255,255,255,0.55)', marginTop: 2 }}>
                         • {item}
                       </p>
                     ))}
@@ -68,10 +70,10 @@ export default function AssumptionFramingPanel({ assumptions, conflicts }: Assum
       {/* Conflicts */}
       {conflicts.length > 0 && (
         <div>
-          <h4 className="font-mono-label text-[10px] mb-3" style={{ color: 'var(--consensus-compromise)' }}>
+          <h4 className="font-mono-label" style={{ fontSize: 10, marginBottom: 16, color: 'var(--consensus-compromise)' }}>
             ⚡ ASSUMPTION CONFLICTS ({conflicts.length})
           </h4>
-          <div className="flex flex-col gap-3">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             {conflicts.map((conflict, i) => (
               <AssumptionConflictCard key={i} conflict={conflict} />
             ))}

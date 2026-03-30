@@ -222,15 +222,15 @@ export default function ConsensusApp() {
 
   return (
     <div className="congress-columns" style={{ minHeight: '100vh' }}>
-      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '24px 40px' }}>
+      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '40px 48px' }}>
 
         {/* Chamber Header */}
         <div className="animate-fade-up" style={{
           display: 'flex',
           alignItems: 'center',
           gap: 16,
-          marginBottom: 20,
-          padding: '16px 20px',
+          marginBottom: 32,
+          padding: '20px 24px',
           borderRadius: 6,
           background: 'rgba(255,255,255,0.02)',
           border: '1px solid rgba(255,255,255,0.05)',
@@ -275,7 +275,7 @@ export default function ConsensusApp() {
 
         {/* Agent Status Bar (during deliberation) */}
         {state.phase === 'deliberating' && (
-          <div className="mb-5">
+          <div style={{ marginBottom: 32 }}>
             <AgentStatusBar
               activeAgent={state.activeAgent}
               activeRound={state.activeRound}
@@ -287,19 +287,19 @@ export default function ConsensusApp() {
         {/* Error */}
         {state.phase === 'error' && (
           <div
-            className="px-5 py-4 rounded-sm mb-6 animate-fade-up chamber-card"
-            style={{ background: 'rgba(231, 76, 60, 0.06)', border: '1px solid rgba(231, 76, 60, 0.15)' }}
+            className="animate-fade-up chamber-card"
+            style={{ padding: '20px 24px', borderRadius: 8, marginBottom: 28, background: 'rgba(231, 76, 60, 0.06)', border: '1px solid rgba(231, 76, 60, 0.15)' }}
           >
-            <p className="font-mono-label text-[10px] mb-1" style={{ color: 'var(--consensus-disagree)' }}>
+            <p className="font-mono-label" style={{ fontSize: 10, marginBottom: 6, color: 'var(--consensus-disagree)' }}>
               DELIBERATION ERROR
             </p>
-            <p className="text-sm" style={{ color: 'var(--text-primary)' }}>
+            <p style={{ fontSize: 14, color: 'var(--text-primary)' }}>
               {state.error}
             </p>
             <button
               onClick={handleReset}
-              className="font-mono-label text-[10px] mt-3 px-4 py-1.5 rounded-sm"
-              style={{ background: 'rgba(255,255,255,0.05)', color: 'var(--text-secondary)', border: '1px solid rgba(255,255,255,0.08)' }}
+              className="font-mono-label"
+              style={{ fontSize: 10, marginTop: 14, padding: '8px 16px', borderRadius: 4, background: 'rgba(255,255,255,0.05)', color: 'var(--text-secondary)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }}
             >
               ← NEW DELIBERATION
             </button>
@@ -308,7 +308,7 @@ export default function ConsensusApp() {
 
         {/* Complete phase — tabs */}
         {state.phase === 'complete' && (
-          <div className="flex items-center gap-3 mb-5 animate-fade-up">
+          <div className="animate-fade-up" style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
             <button
               onClick={() => setActiveTab('consensus')}
               className="font-mono-label text-[11px] px-5 py-2 rounded transition-all"
