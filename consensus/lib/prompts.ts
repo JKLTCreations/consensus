@@ -1,4 +1,4 @@
-import { Round0Assumptions, AssumptionConflict, Round1Analysis, VerificationReport, EnhancedDiscrepancyReport } from './types';
+import { Round0Assumptions, AssumptionConflict, Round1Analysis, Round2Analysis, VerificationReport, EnhancedDiscrepancyReport } from './types';
 
 export function buildRound0Prompt(proposal: string): string {
   return `You are about to analyze the following policy proposal. Before analyzing, declare your assumptions.
@@ -328,6 +328,19 @@ RATIONALITY SCORING per agent:
 
 Respond with ONLY valid JSON (no markdown fences):
 {
+  "spectrum": {
+    "left_label": "Oppose [policy-specific label]",
+    "right_label": "Implement [policy-specific label]",
+    "policy_question": "Should [specific policy question]?",
+    "agent_positions": [
+      {"agent_id": "fiscal", "position": 0, "stance_label": "short label", "one_line_summary": "one sentence"},
+      {"agent_id": "progressive", "position": 0, "stance_label": "short label", "one_line_summary": "one sentence"},
+      {"agent_id": "macro", "position": 0, "stance_label": "short label", "one_line_summary": "one sentence"},
+      {"agent_id": "welfare", "position": 0, "stance_label": "short label", "one_line_summary": "one sentence"},
+      {"agent_id": "legal", "position": 0, "stance_label": "short label", "one_line_summary": "one sentence"}
+    ],
+    "consensus_direction": "One-liner summarizing where the majority leans"
+  },
   "assumption_impact": [
     {"assumption_dimension": "dimension", "impact": "how this affected the debate", "recommended_framing": "suggested framing"}
   ],
@@ -362,6 +375,10 @@ Respond with ONLY valid JSON (no markdown fences):
 }
 
 Rules:
+- spectrum.agent_positions: position 0=strongly oppose, 50=neutral, 100=strongly support. Use the agent's REVISED Round 2 position.
+- spectrum labels must be specific to the policy (not generic "oppose"/"support")
+- spectrum.stance_label: 2-4 words (e.g. "Conditional Support", "Strong Opposition")
+- spectrum.one_line_summary: Max 15 words summarizing the agent's final stance
 - 2-4 assumption_impact entries
 - 3-5 areas_of_agreement
 - 2-4 areas_of_compromise with specific parameters

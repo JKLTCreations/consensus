@@ -14,7 +14,7 @@ import {
 import PolicyInput from './PolicyInput';
 import AgentStatusBar from './AgentStatusBar';
 import DeliberationTimeline from './DeliberationTimeline';
-import ConsensusReport from './ConsensusReport';
+import SpectrumView from './SpectrumView';
 
 const initialState: DeliberationState = {
   phase: 'input',
@@ -87,7 +87,6 @@ export default function ConsensusApp() {
         }
       }
 
-      // Process remaining buffer
       if (buffer.trim()) {
         try {
           const event = JSON.parse(buffer);
@@ -169,7 +168,6 @@ export default function ConsensusApp() {
         break;
 
       case 'programmatic_discrepancies':
-        // Informational — full report comes in discrepancies_detected
         break;
 
       case 'discrepancies_detected':
@@ -211,106 +209,168 @@ export default function ConsensusApp() {
     return <PolicyInput onSubmit={handleSubmit} />;
   }
 
+  // Round label helper
+  const getRoundLabel = (round: number) => {
+    if (round === 0) return 'ASSUMPTION FRAMING';
+    if (round === 1) return 'INDEPENDENT ANALYSIS';
+    if (round === 1.25) return 'EVIDENCE VERIFICATION';
+    if (round === 1.5) return 'DISCREPANCY DETECTION';
+    if (round === 2) return 'CONFLICT RESOLUTION';
+    if (round === 3) return 'CONSENSUS SYNTHESIS';
+    return '';
+  };
+
   return (
-    <div style={{ minHeight: '100vh', maxWidth: 960, margin: '0 auto', padding: '32px 40px' }}>
-      {/* Policy banner */}
-      <div className="mb-6 animate-fade-up">
-        <p className="font-mono-label text-[9px] mb-1" style={{ color: 'rgba(255,255,255,0.25)' }}>
-          DELIBERATING
-        </p>
-        <p className="text-sm leading-relaxed line-clamp-2" style={{ color: 'var(--text-primary)' }}>
-          {state.proposal}
-        </p>
+    <div className="congress-columns" style={{ minHeight: '100vh' }}>
+      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '24px 40px' }}>
+
+        {/* Chamber Header */}
+        <div className="animate-fade-up" style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 16,
+          marginBottom: 20,
+          padding: '16px 20px',
+          borderRadius: 6,
+          background: 'rgba(255,255,255,0.02)',
+          border: '1px solid rgba(255,255,255,0.05)',
+        }}>
+          {/* Seal icon */}
+          <div style={{
+            width: 36,
+            height: 36,
+            borderRadius: '50%',
+            background: 'rgba(196, 163, 90, 0.1)',
+            border: '1px solid rgba(196, 163, 90, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+          }}>
+            <span style={{ fontSize: 16, color: 'var(--accent)' }}>★</span>
+          </div>
+
+          {/* Proposal text */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <p className="font-mono-label text-[9px]" style={{ color: 'rgba(255,255,255,0.25)', marginBottom: 2 }}>
+              {state.phase === 'deliberating' ? 'DELIBERATION IN SESSION' : 'DELIBERATION COMPLETE'}
+            </p>
+            <p className="text-sm leading-relaxed line-clamp-2" style={{ color: 'var(--text-primary)' }}>
+              {state.proposal}
+            </p>
+          </div>
+
+          {/* Status / Round indicator */}
+          {state.phase === 'deliberating' && (
+            <div style={{ textAlign: 'right', flexShrink: 0 }}>
+              <p className="font-mono-label text-[9px]" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                ROUND {state.activeRound === 1.25 ? '1.25' : state.activeRound === 1.5 ? '1.5' : state.activeRound}
+              </p>
+              <p className="font-mono-label text-[10px]" style={{ color: 'var(--accent)' }}>
+                {getRoundLabel(state.activeRound)}
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Agent Status Bar (during deliberation) */}
+        {state.phase === 'deliberating' && (
+          <div className="mb-5">
+            <AgentStatusBar
+              activeAgent={state.activeAgent}
+              activeRound={state.activeRound}
+              completedAgents={completedAgents}
+            />
+          </div>
+        )}
+
+        {/* Error */}
+        {state.phase === 'error' && (
+          <div
+            className="px-5 py-4 rounded-sm mb-6 animate-fade-up chamber-card"
+            style={{ background: 'rgba(231, 76, 60, 0.06)', border: '1px solid rgba(231, 76, 60, 0.15)' }}
+          >
+            <p className="font-mono-label text-[10px] mb-1" style={{ color: 'var(--consensus-disagree)' }}>
+              DELIBERATION ERROR
+            </p>
+            <p className="text-sm" style={{ color: 'var(--text-primary)' }}>
+              {state.error}
+            </p>
+            <button
+              onClick={handleReset}
+              className="font-mono-label text-[10px] mt-3 px-4 py-1.5 rounded-sm"
+              style={{ background: 'rgba(255,255,255,0.05)', color: 'var(--text-secondary)', border: '1px solid rgba(255,255,255,0.08)' }}
+            >
+              ← NEW DELIBERATION
+            </button>
+          </div>
+        )}
+
+        {/* Complete phase — tabs */}
+        {state.phase === 'complete' && (
+          <div className="flex items-center gap-3 mb-5 animate-fade-up">
+            <button
+              onClick={() => setActiveTab('consensus')}
+              className="font-mono-label text-[11px] px-5 py-2 rounded transition-all"
+              style={{
+                background: activeTab === 'consensus' ? 'rgba(196, 163, 90, 0.1)' : 'transparent',
+                color: activeTab === 'consensus' ? 'var(--accent)' : 'rgba(255,255,255,0.3)',
+                border: `1px solid ${activeTab === 'consensus' ? 'rgba(196, 163, 90, 0.2)' : 'rgba(255,255,255,0.04)'}`,
+              }}
+            >
+              ★ CONSENSUS
+            </button>
+            <button
+              onClick={() => setActiveTab('timeline')}
+              className="font-mono-label text-[11px] px-5 py-2 rounded transition-all"
+              style={{
+                background: activeTab === 'timeline' ? 'rgba(196, 163, 90, 0.1)' : 'transparent',
+                color: activeTab === 'timeline' ? 'var(--accent)' : 'rgba(255,255,255,0.3)',
+                border: `1px solid ${activeTab === 'timeline' ? 'rgba(196, 163, 90, 0.2)' : 'rgba(255,255,255,0.04)'}`,
+              }}
+            >
+              PROCEEDINGS
+            </button>
+            <div className="flex-1" />
+            <button
+              onClick={handleReset}
+              className="font-mono-label text-[10px] px-4 py-2 rounded transition-all"
+              style={{
+                background: 'rgba(255,255,255,0.03)',
+                color: 'rgba(255,255,255,0.3)',
+                border: '1px solid rgba(255,255,255,0.05)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(196,163,90,0.25)';
+                e.currentTarget.style.color = 'var(--accent)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
+                e.currentTarget.style.color = 'rgba(255,255,255,0.3)';
+              }}
+            >
+              NEW DELIBERATION
+            </button>
+          </div>
+        )}
+
+        {/* Content */}
+        {state.phase === 'complete' && activeTab === 'consensus' && state.consensus && (
+          <SpectrumView report={state.consensus} round1={state.round1} round2={state.round2} />
+        )}
+
+        {(state.phase === 'deliberating' || (state.phase === 'complete' && activeTab === 'timeline')) && (
+          <DeliberationTimeline state={state} />
+        )}
+
+        {/* Footer */}
+        <footer className="mt-12 mb-6 text-center">
+          <div className="congress-divider" style={{ width: 100, margin: '0 auto 10px' }} />
+          <p className="font-mono-label text-[8px]" style={{ color: 'rgba(255,255,255,0.12)' }}>
+            CONSENSUS v1.0 — DECISION SUPPORT, NOT DECISION MAKING &nbsp;|&nbsp; POWERED BY CLAUDE
+          </p>
+        </footer>
       </div>
-
-      {/* Status bar */}
-      {state.phase === 'deliberating' && (
-        <div className="mb-6">
-          <AgentStatusBar
-            activeAgent={state.activeAgent}
-            activeRound={state.activeRound}
-            completedAgents={completedAgents}
-          />
-        </div>
-      )}
-
-      {/* Error */}
-      {state.phase === 'error' && (
-        <div
-          className="px-4 py-3 rounded-sm mb-6 animate-fade-up"
-          style={{ background: 'rgba(231, 76, 60, 0.1)', border: '1px solid rgba(231, 76, 60, 0.2)' }}
-        >
-          <p className="font-mono-label text-[10px] mb-1" style={{ color: 'var(--consensus-disagree)' }}>
-            ERROR
-          </p>
-          <p className="text-sm" style={{ color: 'var(--text-primary)' }}>
-            {state.error}
-          </p>
-          <button
-            onClick={handleReset}
-            className="font-mono-label text-[10px] mt-3 px-4 py-1.5 rounded-sm"
-            style={{ background: 'rgba(255,255,255,0.05)', color: 'var(--text-secondary)' }}
-          >
-            ← BACK TO INPUT
-          </button>
-        </div>
-      )}
-
-      {/* Complete phase — tabs */}
-      {state.phase === 'complete' && (
-        <div className="flex items-center gap-4 mb-6 animate-fade-up">
-          <button
-            onClick={() => setActiveTab('consensus')}
-            className="font-mono-label text-[11px] px-4 py-1.5 rounded-sm transition-all"
-            style={{
-              background: activeTab === 'consensus' ? 'rgba(196, 163, 90, 0.1)' : 'transparent',
-              color: activeTab === 'consensus' ? 'var(--accent)' : 'rgba(255,255,255,0.35)',
-              border: `1px solid ${activeTab === 'consensus' ? 'rgba(196, 163, 90, 0.2)' : 'rgba(255,255,255,0.04)'}`,
-            }}
-          >
-            CONSENSUS
-          </button>
-          <button
-            onClick={() => setActiveTab('timeline')}
-            className="font-mono-label text-[11px] px-4 py-1.5 rounded-sm transition-all"
-            style={{
-              background: activeTab === 'timeline' ? 'rgba(196, 163, 90, 0.1)' : 'transparent',
-              color: activeTab === 'timeline' ? 'var(--accent)' : 'rgba(255,255,255,0.35)',
-              border: `1px solid ${activeTab === 'timeline' ? 'rgba(196, 163, 90, 0.2)' : 'rgba(255,255,255,0.04)'}`,
-            }}
-          >
-            TIMELINE
-          </button>
-          <div className="flex-1" />
-          <button
-            onClick={handleReset}
-            className="font-mono-label text-[10px] px-4 py-1.5 rounded-sm"
-            style={{
-              background: 'rgba(255,255,255,0.03)',
-              color: 'rgba(255,255,255,0.35)',
-              border: '1px solid rgba(255,255,255,0.04)',
-            }}
-          >
-            NEW DELIBERATION
-          </button>
-        </div>
-      )}
-
-      {/* Content */}
-      {state.phase === 'complete' && activeTab === 'consensus' && state.consensus && (
-        <ConsensusReport report={state.consensus} />
-      )}
-
-      {(state.phase === 'deliberating' || (state.phase === 'complete' && activeTab === 'timeline')) && (
-        <DeliberationTimeline state={state} />
-      )}
-
-      {/* Footer */}
-      <footer className="mt-16 mb-8 text-center">
-        <p className="font-mono-label text-[9px]" style={{ color: 'rgba(255,255,255,0.15)' }}>
-          CONSENSUS v1.0 — DECISION SUPPORT, NOT DECISION MAKING &nbsp;|&nbsp; POWERED BY CLAUDE
-        </p>
-      </footer>
     </div>
   );
 }

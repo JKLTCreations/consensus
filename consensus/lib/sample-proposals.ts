@@ -41,5 +41,12 @@ export const sampleProposals: SampleProposal[] = [
     title: "Free Community College",
     description: "Federal funding for tuition-free community college",
     text: "Provide federal funding to make community college tuition-free for all U.S. residents, regardless of age or income. The federal government would cover 75% of average per-student tuition costs, with states covering the remaining 25% as a condition of participation. Eligible institutions must maintain accreditation, demonstrate student completion rates above 25%, and offer at least 3 workforce-aligned certificate programs. Students must maintain a 2.0 GPA and enroll at least half-time. Pell Grants would remain available for living expenses. Estimated federal cost: $80 billion over 10 years. Funded through closing the carried interest loophole ($14B), increasing IRS enforcement ($40B projected additional revenue), and redirecting existing higher education tax expenditures ($26B)."
+  },
+  {
+    id: "ai-licensing",
+    number: "06",
+    title: "Federal AI Licensing Act",
+    description: "Mandatory licensing for high-risk AI systems above compute thresholds",
+    text: "Establish a Federal AI Licensing Authority (FAILA) within the Department of Commerce to regulate artificial intelligence systems. Any AI model trained using more than 10^26 floating-point operations (FLOP) would require a federal license before deployment. License applicants must submit pre-deployment safety evaluations including red-team testing results, bias audits by accredited third-party labs, and a catastrophic risk assessment. Licensed models must maintain real-time monitoring dashboards accessible to FAILA and implement mandatory watermarking of all AI-generated content. Companies deploying AI systems that automate decisions affecting employment, credit, housing, or criminal justice must conduct annual disparate impact analyses and publish results publicly. A 1.5% tax on gross revenue of companies operating licensed AI systems would fund FAILA operations ($2B estimated annual budget), an AI Safety Research Fund ($1B/year), and a Displaced Worker Transition Program providing up to 24 months of retraining benefits for workers whose positions are eliminated by AI automation. Violations would carry penalties up to $25 million per incident or 4% of global annual revenue, whichever is greater. Open-source models with weights publicly available would be exempt from licensing but not from content watermarking or disparate impact requirements."
   }
 ];

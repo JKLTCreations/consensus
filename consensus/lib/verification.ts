@@ -23,7 +23,8 @@ export async function verifyClaimsWithSearch(
     const response = await client.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2048,
-      tools: [{ type: 'web_search_20250305' as const, name: 'web_search', max_uses: 10 }],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 10 }] as any,
       messages: [
         {
           role: 'user',

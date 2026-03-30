@@ -118,6 +118,22 @@ export interface Round2Analysis {
   confidence: number;
 }
 
+// Spectrum
+export interface SpectrumPosition {
+  agent_id: string;
+  position: number; // 0-100: 0=strongly oppose, 50=neutral, 100=strongly support
+  stance_label: string;
+  one_line_summary: string;
+}
+
+export interface SpectrumData {
+  left_label: string;
+  right_label: string;
+  policy_question: string;
+  agent_positions: SpectrumPosition[];
+  consensus_direction: string;
+}
+
 // Consensus
 export interface AssumptionImpact {
   assumption_dimension: string;
@@ -143,6 +159,7 @@ export interface ResolvedDiscrepancy {
 }
 
 export interface ConsensusReport {
+  spectrum: SpectrumData;
   assumption_impact: AssumptionImpact[];
   verification_impact: VerificationImpact;
   resolved_discrepancies: ResolvedDiscrepancy[];
