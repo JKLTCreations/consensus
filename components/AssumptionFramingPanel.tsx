@@ -96,7 +96,7 @@ export default function AssumptionFramingPanel({ assumptions, conflicts }: Assum
         title="AGENT ASSUMPTIONS"
         summary={`${agentCount} agents`}
       >
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 16 }}>
           {Object.entries(assumptions).map(([agentId, agentAssumptions]) => {
             const agent = getAgent(agentId);
             if (!agent) return null;
@@ -108,6 +108,9 @@ export default function AssumptionFramingPanel({ assumptions, conflicts }: Assum
                   borderRadius: 6,
                   background: 'rgba(255,255,255,0.02)',
                   border: '1px solid rgba(255,255,255,0.04)',
+                  width: 260,
+                  flexGrow: 0,
+                  flexShrink: 0,
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>

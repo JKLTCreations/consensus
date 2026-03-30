@@ -62,7 +62,7 @@ export default function CollapsibleSection({ title, summary, defaultOpen = false
         )}
       </button>
       {open && (
-        <div style={{ paddingTop: 12, paddingLeft: 20 }}>
+        <div style={{ paddingTop: 12 }}>
           {children}
         </div>
       )}
